@@ -1,0 +1,47 @@
+{
+  "@context": "https://frost.met.no/schema",
+  "@type": "SourceResponse",
+  "apiVersion": "v0",
+  "license": "https://creativecommons.org/licenses/by/3.0/no/",
+  "createdAt": "2023-09-17T19:54:24Z",
+  "queryTime": 1.968,
+  "currentItemCount": 1,
+  "itemsPerPage": 1,
+  "offset": 0,
+  "totalItemCount": 1,
+  "currentLink": "https://frost.met.no/sources/v0.jsonld?types=SensorSystem&elements=air_temperature%2Crelative_humidity%2Cwind_speed&geometry=nearest%28POINT%285.3199+60.3915%29%29",
+  "data": [
+    {
+      "@type": "SensorSystem",
+      "id": "SN50540",
+      "name": "BERGEN - FLORIDA",
+      "shortName": "Bergen",
+      "country": "Norge",
+      "countryCode": "NO",
+      "wmoId": 1317,
+      "geometry": {
+        "@type": "Point",
+        "coordinates": [
+          5.3327,
+          60.383
+        ],
+        "nearest": false
+      },
+      "distance": 1.17811577289,
+      "masl": 12,
+      "validFrom": "1949-11-28T00:00:00.000Z",
+      "county": "VESTLAND",
+      "countyId": 46,
+      "municipality": "BERGEN",
+      "municipalityId": 4601,
+      "stationHolders": [
+        "MET.NO"
+      ],
+      "externalIds": [
+        "0-20000-0-01317",
+        "10.249.0.159"
+      ],
+      "wigosId": "0-20000-0-01317"
+    }
+  ]
+}
