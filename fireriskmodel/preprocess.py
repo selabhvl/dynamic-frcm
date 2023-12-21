@@ -28,7 +28,6 @@ def find_data_gap(*args): # np.array
 
 def preprocess(wd: WeatherData):
 
-    # TODO: add to wd element before validation
     # Should not be necessary, but data is initially sorted according to the timestamps
     sorted_data_obs = sorted(wd.observations.data, key=lambda x: x.timestamp)
     sorted_data_fct = sorted(wd.forecast.data, key=lambda x: x.timestamp)
@@ -41,6 +40,8 @@ def preprocess(wd: WeatherData):
 
     # Convert timestamp vector to a vector containing delta time of adjacent elements in seconds, starting at 0.
     timestamp_vector_sec = [round((timestamp - timestamp_vector[0]).total_seconds()) for timestamp in timestamp_vector]
+    # Get start of computation as datetime
+    start_time = timestamp_vector[0]
 
     # Identify position of np.nan values and remove from "parameter"_vector and associated "parameter"_timevector
     # Resulting vectors are used in the np interpolation function (np.interp)
@@ -60,5 +61,5 @@ def preprocess(wd: WeatherData):
     humidity_interpolated = np.interp(interpolation_timevector_sec, time_humidity_clean, humidity_clean)
     wind_interpolated = np.interp(interpolation_timevector_sec, time_wind_clean, wind_clean)
 
-    return interpolation_timevector_sec, temp_interpolated, humidity_interpolated, wind_interpolated, max_time_delta
+    return start_time, interpolation_timevector_sec, temp_interpolated, humidity_interpolated, wind_interpolated, max_time_delta
 

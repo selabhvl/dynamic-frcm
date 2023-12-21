@@ -2,7 +2,6 @@ import datetime
 
 from datamodel.model import FireRiskPrediction, Location, WeatherData, Observations, Forecast
 from weatherdata.client import WeatherDataClient
-from datamodel.utils import wd_validate, wdps_list_str
 import fireriskmodel.compute
 
 import weatherdata.utils
@@ -20,63 +19,10 @@ class FireRiskAPI:
 
         return fireriskmodel.compute.compute(wd)
 
-    def preprocess(self, wd: WeatherData):
-
-        # validate order, max timedelta and gap between observation and forecast
-        validated = wd_validate(wd, self.timedelta_ok)
-
-        print(validated)
-
-        # interpolate
-        obs_wdps_interpolated = weatherdata.utils.interpolate_wdps(wd.observations.data, self.interpolate_distance)
-        fct_wdps_interpolated = weatherdata.utils.interpolate_wdps(wd.forecast.data, self.interpolate_distance)
-
-        wd_interpolated = WeatherData(created=wd.created,
-                                      observations=Observations(source=wd.observations.source,
-                                                                location=wd.observations.location,
-                                                                data=obs_wdps_interpolated),
-                                      forecast=Forecast(location=wd.forecast.location,
-                                                        data=fct_wdps_interpolated))
-        #print(wd_interpolated.observations)
-        #print(wd_interpolated.forecast)
-
-        latest_obs = wd_interpolated.observations.data[-1]
-
-        #print(latest_obs)
-
-        earliest_fct = wd_interpolated.forecast.data[0]
-
-        #print(earliest_fct)
-
-        gap = [latest_obs, earliest_fct]
-
-        gap_interpolated = weatherdata.utils.interpolate_wdps(gap, self.interpolate_distance)
-
-        # for now all gap wdps goes into observations
-
-        gap_observations = gap_interpolated[1:-1]
-
-        wd_interpolated.observations.data.extend(gap_observations)
-
-        #print(wd_interpolated.observations)
-        #print(wd_interpolated.forecast)
-
-        #print(wdps_list_str(gap_observations))
-
-        #print(latest_obs)
-
-        #print(earliest_fct)
-
-        return wd_interpolated
-
-
     def compute_now(self, location: Location, obs_delta: datetime.timedelta) -> FireRiskPrediction:
 
         time_now = datetime.datetime.now()
         start_time = time_now - obs_delta
-
- #       print(time_now)
- #       print(start_time)
 
         observations = self.client.fetch_observations(location, start=start_time, end=time_now)
 
@@ -90,21 +36,11 @@ class FireRiskAPI:
 
         print(wd.to_json())
 
- #       print(wd)
-
-        # wd_preprocessed = self.preprocess(wd)# TODO (NOTE): turned off during testing (moving interpolation to frm)
-
-        # print(wd_preprocessed.observations)
-
-        # print(wd_preprocessed.forecast)
-
-        prediction = self.compute(wd) # TODO (NOTE): is rewritten from wd_preprocessed to wd for testing
+        prediction = self.compute(wd)
 
         return prediction
 
-        # compute firerisks based on weather data
 
-        # return firerisks
 
 
 

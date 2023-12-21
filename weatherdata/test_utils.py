@@ -1,8 +1,19 @@
 import unittest
 import datetime
 
+import os
+import sys
+
 import sampledata.frost_sample_weatherdata
 import sampledata.met_sample_weatherdata
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
+import datamodel.model as dm
+import fireriskmodel.preprocess as pp
+from fireriskmodel.parameters import delta_t
 
 import utils
 
@@ -10,39 +21,82 @@ import utils
 class TestUtil(unittest.TestCase):
 
     def setUp(self):
-        self.observation_wdps = \
+        self.observations_wdps = \
             utils.weatherdata_parse(sampledata.frost_sample_weatherdata.frost_sample_weatherdata['data'])
 
         self.forecast_wdps = \
             utils.weatherdata_parse(sampledata.met_sample_weatherdata.met_sample_weatherdata['data'])
 
+        self.location = dm.Location(latitude=60.383, longitude=5.3327)
+
     def test_interpolate_obs(self):
 
         print("Observations")
-        interpolated_obs_wdps = utils.interpolate_wdps(self.observation_wdps, 720)
+        observations = dm.Observations(
+            source="testdata",
+            location=self.location,
+            data=self.observations_wdps)
 
-        for wdp in interpolated_obs_wdps:
-            print(wdp)
+        forecast = dm.Forecast(
+            location=self.location,
+            data=list())
 
-        for i in range(1, len(interpolated_obs_wdps)):
+        wd = dm.WeatherData(
+            created=datetime.datetime.now(),
+            observations=observations,
+            forecast=forecast)
+
+        start_time, time_interpolated_sec, temp_interpolated, humidity_interpolated, wind_interpolated, max_time_delta \
+        = pp.preprocess(wd)
+
+        for i in range(0, len(time_interpolated_sec)):
+            timestamp = start_time + datetime.timedelta(seconds=time_interpolated_sec[i])
+            wd_point = dm.WeatherDataPoint(temperature=temp_interpolated[i],
+                                           humidity=humidity_interpolated[i],
+                                           wind_speed=wind_interpolated[i],
+                                           timestamp=timestamp)
+
+            print(wd_point)
+
+        for i in range(1, len(time_interpolated_sec)):
             timedelta = \
-                interpolated_obs_wdps[i].timestamp - interpolated_obs_wdps[i-1].timestamp
+                time_interpolated_sec[i] - time_interpolated_sec[i-1]
 
-            self.assertEqual(timedelta, datetime.timedelta(seconds=720))
+            self.assertEqual(timedelta, delta_t)
 
     def test_interpolate_fct(self):
 
         print("Forecast")
-        interpolated_fct_wdps = utils.interpolate_wdps(self.forecast_wdps, 720)
+        observations = dm.Observations(
+            source="testdata",
+            location=self.location,
+            data=list())
 
-        for wdp in interpolated_fct_wdps:
-            print(wdp)
+        forecast = dm.Forecast(
+            location=self.location,
+            data=self.forecast_wdps)
 
-        for i in range(1, len(interpolated_fct_wdps)):
+        wd = dm.WeatherData(
+            created=datetime.datetime.now(),
+            observations=observations,
+            forecast=forecast)
+
+        start_time, time_interpolated_sec, temp_interpolated, humidity_interpolated, wind_interpolated, max_time_delta \
+        = pp.preprocess(wd)
+
+        for i in range(0, len(time_interpolated_sec)):
+            timestamp = start_time + datetime.timedelta(seconds=time_interpolated_sec[i])
+            wd_point = dm.WeatherDataPoint(temperature=temp_interpolated[i],
+                                           humidity=humidity_interpolated[i],
+                                           wind_speed=wind_interpolated[i],
+                                           timestamp=timestamp)
+            print(wd_point)
+
+        for i in range(1, len(time_interpolated_sec)):
             timedelta = \
-                interpolated_fct_wdps[i].timestamp - interpolated_fct_wdps[i - 1].timestamp
+                time_interpolated_sec[i] - time_interpolated_sec[i-1]
 
-        self.assertEqual(timedelta, datetime.timedelta(seconds=720))
+            self.assertEqual(timedelta, delta_t)
 
 
 if __name__ == '__main__':

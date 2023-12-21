@@ -16,7 +16,7 @@ import fireriskmodel.preprocess as pp
 def compute(wd: dm.WeatherData) -> dm.FireRiskPrediction:
 
     # Get interpolated values #TODO (NOTE) The max_time_delta represents the largest gap in missing data (seconds). It can be used to provide suited warning/error message.
-    time_interpolated_sec, temp_interpolated, humidity_interpolated, wind_interpolated, max_time_delta = pp.preprocess(wd)
+    start_time, time_interpolated_sec, temp_interpolated, humidity_interpolated, wind_interpolated, max_time_delta = pp.preprocess(wd)
     comp_loc = wd.forecast.location
 
     # Compute RH_in and TTF
@@ -31,7 +31,6 @@ def compute(wd: dm.WeatherData) -> dm.FireRiskPrediction:
 
     # Create response according to datamodel
     firerisks = []
-    start_time = wd.observations.data[0].timestamp
     for i in range(len(rh_in_hour)):
         timestamps = start_time + datetime.timedelta(seconds=time_in_hour[i])
         firerisk_i = dm.FireRisk(timestamp=timestamps, ttf=ttf_in_hour[i])

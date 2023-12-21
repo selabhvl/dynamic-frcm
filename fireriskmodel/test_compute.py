@@ -6,6 +6,7 @@ import datetime
 
 import compute
 import test_testdata
+import preprocess
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -19,13 +20,13 @@ class TestUtil(unittest.TestCase):
 
     def setUp(self):
 
-        self.observations_wdps = wdutils.interpolate_wdps(dmutils.list_to_wdps(test_testdata.frost_sample_weatherdatapoints),720)
+        self.observations_wdps = dmutils.list_to_wdps(test_testdata.frost_sample_weatherdatapoints)
 
-        self.forecast_wdps = wdutils.interpolate_wdps(dmutils.list_to_wdps(test_testdata.met_sample_weatherdatapoints),720)
+        self.forecast_wdps = dmutils.list_to_wdps(test_testdata.met_sample_weatherdatapoints)
 
         self.location = dm.Location(latitude=60.383, longitude=5.3327)
 
-#        print(self.observations_wdps)
+
 
     def test_compute_obs(self):
 

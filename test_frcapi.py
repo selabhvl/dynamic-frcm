@@ -9,6 +9,7 @@ from frcapi import FireRiskAPI
 from weatherdata.client_met import METClient
 from weatherdata.extractor_met import METExtractor
 from datamodel.model import Location
+import fireriskmodel.preprocess
 
 
 class TestFRCAPI(unittest.TestCase):
@@ -44,16 +45,14 @@ class TestFRCAPI(unittest.TestCase):
         #print(self.wd.observations)
         #print(self.wd.forecast)
 
-        self.frc.preprocess(self.wd)
+        fireriskmodel.preprocess.preprocess(self.wd)
 
         # for now just check that it runs without errors
         self.assertTrue(True)
 
     def test_compute(self):
 
-        wd_preprocessed = self.frc.preprocess(self.wd)
-
-        predictions = self.frc.compute(wd_preprocessed)
+        predictions = self.frc.compute(self.wd)
 
         print(predictions)
 

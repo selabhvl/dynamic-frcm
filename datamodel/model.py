@@ -32,15 +32,12 @@ class Observations(BaseModel):
     data: list[WeatherDataPoint]
 
     def __str__(self):
-
         format_str = f'Observations [Source: {self.source} @ Location: {self.location}]\n'
 
-        # TODO: current string concatenation is inefficient
-        for data_point in self.data:
+        # Join all data points using '\n' as a separator
+        data_strings = '\n'.join(map(str, self.data))
 
-            format_str = format_str + str(data_point) + '\n'
-
-        return format_str
+        return format_str + data_strings + '\n'
 
 
 class Forecast(BaseModel):
@@ -49,15 +46,12 @@ class Forecast(BaseModel):
     data: list[WeatherDataPoint]
 
     def __str__(self):
-
         format_str = f'Forecast @ Location: {self.location}\n'
 
-        # TODO: current string concatenation is inefficient
-        for data_point in self.data:
+        # Join all data points using '\n' as a separator
+        data_strings = '\n'.join(map(str, self.data))
 
-            format_str = format_str + str(data_point) + '\n'
-
-        return format_str
+        return format_str + data_strings + '\n'
 
 
 class WeatherData(BaseModel):
