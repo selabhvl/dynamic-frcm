@@ -4,17 +4,18 @@ import sys
 import unittest
 import datetime
 
-import compute
-import test_testdata
-import preprocess
+import frcm.fireriskmodel.compute as compute
+import testdata.test_testdata_fireriskmodel as test_testdata
+import frcm.fireriskmodel.preprocess
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
+#current = os.path.dirname(os.path.realpath(__file__))
+#parent = os.path.dirname(current)
+#sys.path.append(parent)
 
-import datamodel.utils as dmutils
-import datamodel.model as dm
-import weatherdata.utils as wdutils
+import frcm.datamodel.utils as dmutils
+import frcm.datamodel.model as dm
+import frcm.weatherdata.utils as wdutils
+
 
 class TestUtil(unittest.TestCase):
 
@@ -87,6 +88,7 @@ class TestUtil(unittest.TestCase):
         firerisks = compute.compute(weatherdata)
 
         print(firerisks)
+
 
 if __name__ == '__main__':
     unittest.main()

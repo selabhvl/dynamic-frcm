@@ -1,14 +1,7 @@
-import os
-import sys
-
 import datetime
 import dateutil.parser
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-import datamodel.model as dm
+import frcm.datamodel.model as dm
 
 
 def min_time(data: list[dm.WeatherDataPoint]):

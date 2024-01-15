@@ -7,15 +7,15 @@ import sys
 import sampledata.frost_sample_weatherdata
 import sampledata.met_sample_weatherdata
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
+#current = os.path.dirname(os.path.realpath(__file__))
+#parent = os.path.dirname(current)
+#sys.path.append(parent)
 
-import datamodel.model as dm
-import fireriskmodel.preprocess as pp
-from fireriskmodel.parameters import delta_t
+import frcm.datamodel.model as dm
+import frcm.fireriskmodel.preprocess as pp
+from frcm.fireriskmodel.parameters import delta_t
 
-import utils
+import frcm.weatherdata.utils as utils
 
 
 class TestUtil(unittest.TestCase):

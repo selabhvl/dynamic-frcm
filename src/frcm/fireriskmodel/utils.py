@@ -1,13 +1,6 @@
-import sys
-import os
-
 import math
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-import fireriskmodel.parameters as mp
+import frcm.fireriskmodel.parameters as mp
 
 """Functions for computing saturation vapor pressure, and water concentrations"""
 """ pw_sat -- cw_sat -- cw_in -- initial fmc """

@@ -1,9 +1,9 @@
 import datetime
 
-from extractor_met import METExtractor
-from client_met import METClient
+from frcm.weatherdata.extractor_met import METExtractor
+from frcm.weatherdata.client_met import METClient
 
-from datamodel.model import Location
+from frcm.datamodel.model import Location
 
 import unittest
 

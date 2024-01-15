@@ -1,15 +1,9 @@
-import os
-import sys
-
 import json
 import dateutil.parser
+import numpy as np
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-from weatherdata.extractor import Extractor
-from datamodel.model import *
+from frcm.weatherdata.extractor import Extractor
+from frcm.datamodel.model import *
 
 
 class METExtractor(Extractor):

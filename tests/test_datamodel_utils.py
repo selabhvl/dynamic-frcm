@@ -2,9 +2,9 @@ import unittest
 import datetime
 import dateutil
 
-import test_testdata
+import testdata.test_testdata_fireriskmodel as test_testdata
 
-import utils
+import frcm.datamodel.utils as utils
 
 
 class TestUtil(unittest.TestCase):

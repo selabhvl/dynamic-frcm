@@ -1,6 +1,3 @@
-import os
-import sys
-
 import requests
 import datetime
 import json
@@ -8,13 +5,9 @@ import json
 # see .env.example.py in the root dir.
 from decouple import config
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-from weatherdata.client import WeatherDataClient
-from weatherdata.extractor import Extractor
-from datamodel.model import Location, Observations, Forecast
+from frcm.weatherdata.client import WeatherDataClient
+from frcm.weatherdata.extractor import Extractor
+from frcm.datamodel.model import Location, Observations, Forecast
 
 
 class METClient(WeatherDataClient):

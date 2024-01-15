@@ -1,7 +1,6 @@
-from datamodel.model import *
-from fireriskmodel.parameters import delta_t
+from frcm.datamodel.model import *
+from frcm.fireriskmodel.parameters import delta_t
 import numpy as np
-#from weatherdata.sampledata import frost_sample_weatherdata, met_sample_weatherdata
 
 
 def combine_obs_fct(sorted_data_obs, sorted_data_fct, parameter):
@@ -10,6 +9,7 @@ def combine_obs_fct(sorted_data_obs, sorted_data_fct, parameter):
     combined = obs + fct
     return combined
 
+
 def clean_nan(data_vector, time_vector):
     # Treat Data
     nan_indices = np.where(np.isnan(data_vector))
@@ -17,6 +17,7 @@ def clean_nan(data_vector, time_vector):
     # Treat associated time_vector
     time_cleaned = np.delete(time_vector, nan_indices)
     return data_cleaned, time_cleaned
+
 
 def find_data_gap(*args): # np.array
     max_delta = []

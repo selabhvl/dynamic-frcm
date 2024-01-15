@@ -1,13 +1,6 @@
-import os
-import sys
 import dateutil.parser
 
-# https://www.geeksforgeeks.org/python-import-from-parent-directory/
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-from datamodel.model import WeatherDataPoint
+from frcm.datamodel.model import WeatherDataPoint
 
 
 def weatherdata_parse(datadict) -> list[WeatherDataPoint]:

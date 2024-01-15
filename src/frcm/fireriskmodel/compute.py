@@ -1,16 +1,10 @@
-import os
-import sys
 import numpy as np
 import datetime
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-import datamodel.model as dm
-import fireriskmodel.parameters as mp
-import fireriskmodel.utils as func
-import fireriskmodel.preprocess as pp
+import frcm.datamodel.model as dm
+import frcm.fireriskmodel.parameters as mp
+import frcm.fireriskmodel.utils as func
+import frcm.fireriskmodel.preprocess as pp
 
 
 def compute(wd: dm.WeatherData) -> dm.FireRiskPrediction:
