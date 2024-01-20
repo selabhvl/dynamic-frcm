@@ -12,6 +12,8 @@ The project is based on using the [Poetry package manager](https://python-poetry
 
 Start by installing Poetry for your platform using the [installation instructions](https://python-poetry.org/docs/#installation)
 
+Create a new virtual Python environment for the project and activate the virtual environment.
+
 To install the required Python packages use:
 
 ```
@@ -51,9 +53,9 @@ Please make sure that you conform to the terms of service which includes restric
 
 # Testing
 
-The folder `src/tests` contains a number of unit tests that can be used to test the implementation. 
+The folder `tests` contains a number of unit tests that can be used to test the implementation. 
 
-To execute the tests enter the `src/tests` folder and execute
+To execute the tests enter the `tests` folder and execute
 
 ```
 pytest
