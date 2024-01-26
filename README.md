@@ -58,19 +58,19 @@ The folder `tests` contains a number of unit tests that can be used to test the 
 To execute the tests enter the `tests` folder and execute
 
 ```
-pytest
+poetry run pytest
 ```
 
 You may also execute a specific test-file in the test-suite using, e.g., 
 
 ```
-pytest test_datamodel.py
+poetry run pytest test_datamodel.py
 ```
 
 or running a specific test within a test-file using, e.g., 
 
 ```
-pytest test_datamodel.py::TestDataModel::test_validate
+poetry run pytest test_datamodel.py::TestDataModel::test_validate
 ```
 
 # Application integration
@@ -80,7 +80,7 @@ The file `src/main.py` provides sample code on how to compute fire risk indicati
 Running the command
 
 ```
-python3 main.py
+poetry run python main.py
 ```
 
 should result in similar output as below 
